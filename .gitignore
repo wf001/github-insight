@@ -1,0 +1,10 @@
+.env 
+.envrc
+assets/template/*.html
+!assets/template/base.html
+!assets/test_commit.json
+run.sh
+generated/**
+bin/**
+tests/generated/**
+*.txt

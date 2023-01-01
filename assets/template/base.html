@@ -1,0 +1,447 @@
+<html lang="en">
+
+<head>
+	<!-- Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CSS -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="../assets/template/base.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link
+		href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@300;700&family=Nanum+Gothic&family=Open+Sans&family=Roboto+Condensed&display=swap"
+		rel="stylesheet">
+	<title>Result - Github Insight</title>
+</head>
+
+<body>
+	<div>
+		<nav class="navbar navbar-light">
+			<div class="container-fluid" style="  display: flex; justify-content: center;">
+				<img src="../assets/gi_log.png" alt="" height="30rem">
+			</div>
+		</nav>
+		<div class="container">
+			<div class="row">
+				<!-- RateLimit -->
+				<div class="col col-xl-6 col-lg-12 mt-5">
+					<div class="card nb-card">
+						<div class="card-body">
+							<div>
+								<table class="table table-borderless">
+									<tbody>
+										<tr>
+											<td>Repository:</td>
+											<td>
+												<a href="https://github.com/{{.User}}/{{.RepoName}}" target="_blank" rel="noopener noreferrer">
+													<img src="{{ .Info.AvatarURL }}" alt="Avatar" class="avatar">
+													{{ .User }}/{{.RepoName}}
+												</a>
+											</td>
+										</tr>
+										<tr>
+											<td>Language</td>
+											<td> {{ .Info.Language }}</td>
+										</tr>
+										<tr>
+											<td>Description:</td>
+											<td>
+												{{ if eq .Info.Description ""}}
+												none
+												{{ else }}
+												{{ .Info.Description }}
+												{{ end }}
+											</td>
+										</tr>
+										<tr>
+											<td>HomePage:</td>
+											<td>
+												{{ if eq .Info.HomePage ""}}
+												none
+												{{ else }}
+												<a href="{{ .Info.HomePage }}" target="_blank" rel="noopener noreferrer">{{ .Info.HomePage
+													}}</a>
+												{{ end }}
+											</td>
+										</tr>
+										<tr>
+											<td>Stars / Forks</td>
+											<td>{{ .Info.Stars }} Stars / {{ .Info.Forks }} Forks</td>
+										</tr>
+										<tr>
+											<td>License:</td>
+											<td>
+												{{ if eq .Info.License "" }}
+												none
+												{{ else }}
+												<a href="{{ .Info.LicenseURL }}" target="_blank" rel="noopener noreferrer">{{ .Info.License
+													}}</a>
+												{{ end }}
+											</td>
+										</tr>
+										<tr>
+											<td>Fork:</td>
+											<td> {{ .Info.IsFork }}</td>
+										</tr>
+										<tr>
+											<td>Size:</td>
+											<td>{{ .Info.Size }}KB</td>
+										</tr>
+										<tr>
+											<td>Commits: </td>
+											<td> {{ .CommitCount }} </td>
+										</tr>
+										<tr>
+											<td>Open Issues: </td>
+											<td> {{ .IssueCount }}</td>
+										</tr>
+										<tr>
+											<td>README.md:</td>
+											<td>
+												{{ if eq .Readme ""}}
+												false
+												{{ else }}
+												<a href="{{ .Readme }}" target="_blank" rel="noopener noreferrer">true</a>
+												{{ end }}
+											</td>
+										</tr>
+										<tr>
+											<td>CONTRIBUTING.md:</td>
+											<td>
+												{{ if eq .Contributing ""}}
+												false
+												{{ else }}
+												<a href="{{ .Contributing }}" target="_blank" rel="noopener noreferrer">true</a>
+												{{ end }}
+											</td>
+										</tr>
+										<tr>
+											<td>Created at</td>
+											<td> {{ .Info.CreatedAt }}</td>
+										</tr>
+										<tr>
+											<td>Update at</td>
+											<td>{{ .Info.UpdatedAt }}</td>
+										</tr>
+									</tbody>
+								</table>
+								<hr />
+								<table class="table table-borderless">
+									<tbody>
+										<tr>
+											<td>API Rate Limit:</td>
+											<td>{{ .RateLimits.Core.Remaining }} available / up to {{.RateLimits.Core.Limit}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Repository languages -->
+				<div class="col col-xl-6 col-lg-12 mt-5">
+					<div class="card nb-card">
+						<div class="card-header">
+							<p class="lead">Distribution of Languages</p>
+						</div>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col col-8">
+									<div class="card-body">
+										{{ template "repo_language.html"}}
+									</div>
+								</div>
+								<div class="col col-4" style="display: flex;align-items: center;">
+									<div>
+										<table class="table table-borderless table-sm">
+											<thead style="background-color:white;">
+												<tr>
+													<th scope="col"><small>Language</small></th>
+													<th class="text-r" scope="col"><small>Size(Bytes)</small></th>
+												</tr>
+											</thead>
+											<tbody>
+												{{ range $v := .Languages }}
+												<tr>
+													<td><small>{{ $v.Name }}</small></td>
+													<td class="text-r"><small>{{ $v.Amount }}</small></td>
+												</tr>
+												{{ end }}
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Daily Commit -->
+				<div class="col col-xl-6 mt-xl-5 mt-lg-3 mt-md-3 mt-sm-2">
+					<div class="col col-xl-12">
+						<div class="card nb-card">
+							<div class="card-header">
+								<p class="lead">Daily Commit
+								</p>
+							</div>
+							<div class="card-body">
+								{{ template "daily_commit.html"}}
+							</div>
+						</div>
+					</div>
+
+					<!-- Committer insight -->
+					<div class="col col-xl-12 mt-3">
+						<div class="card nb-card">
+							<div class="card-header">
+								<p class="lead">Distribution of Committers</p>
+							</div>
+							<div class="card-body">
+								<div class="col col-12">
+									{{ template "committers.html"}}
+								</div>
+								<div class="col col-12">
+									<table class="table table-borderless">
+										<thead style="background-color:white;">
+											<tr>
+												<th scope="col"></th>
+												<th scope="col">Name</th>
+												<th class="text-r" scope="col">Commits</th>
+											</tr>
+										</thead>
+										<tbody>
+											{{ range .Committers }}
+											<tr>
+												<th scope="row">{{ if ne .Name "the others" }}{{ .Row }}{{end}}</th>
+												<td>
+													{{if ne .Name "the others"}}
+													<a href="{{ .URL }} " target="_blank" rel="noopener noreferrer">
+														<img src="{{ .AvatarURL }}" alt="Avatar" class="avatar">
+														{{ .Name }}
+													</a>
+													({{ .Email }})
+													{{end}}
+													{{if eq .Name "the others"}}
+													<p>
+														{{ .Name }}
+													</p>
+													{{end}}
+												</td>
+												<td class="text-r">{{ .Amount }}</td>
+											</tr>
+											{{ end }}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Recent Commit History -->
+				<div class="col col-xl-6 col-lg-12 mt-5">
+					<div class="card nb-card">
+						<div class="card-header">
+							<p class="lead">Latest Commits</p>
+						</div>
+						<div class="card-body">
+							<div>
+								{{ range .LatestCommit }}
+								<div class="card mt-2 pb-0">
+									<div class="card-body">
+										<div>
+											<h5 style="font-weight:bold;">
+												<a href="{{ .URL }}" target="_blank" rel="noopenew noreferrer">
+													{{.Message }}
+												</a>
+											</h5>
+										</div>
+										<table class="table table-borderless mt-3">
+											<tbody>
+												<tr>
+													<td>
+														by <a href="{{ .AuthorURL }}" target="_blank" rel="noopener noreferrer">
+															<img src="{{ .AvatarURL }}" alt="Avatar" class="avatar">
+															{{ .Name }}
+														</a>
+													</td>
+													<td class="text-r">
+														on <small> {{ .Date }}</small>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								{{ end }}
+							</div>
+						</div>
+						<div class="card-footer text-r m-3">
+							<a href="https://github.com/{{ .User }}/{{ .RepoName }}/commits" target="_blank"
+								rel="noopener noreferrer">See Github</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<!-- Recent Issues -->
+				<div class="col col-xl-6 mt-xl-5 mt-lg-3 mt-md-3 mt-sm-2 mt-3">
+					<div class="col col-xl-12 mt-3">
+						<div class="card nb-card">
+							<div class="card-header">
+								<p class="lead">Latest Issues</p>
+							</div>
+							<div class="card-body">
+								<div>
+									{{ if eq .IssueCount 0 }}
+									<p style="text-align:center;">nothing to show</p>
+									{{ else }}
+									{{ range .LatestIssues }}
+									<div class="card mt-2 pb-0">
+										<div class="card-body">
+											<div>
+												{{ range $key,$v := .Label }}
+												<span class="badge rounded-pill mb-1" style="background-color:{{$v}}">{{$key}}</span>
+												{{ end }}
+												<h5 style="font-weight:bold;">
+													<a href="{{ .URL }}" target="_blank" rel="noopenew noreferrer">
+														{{.Title }}
+													</a>
+												</h5>
+												<p> {{ .Body }}</p>
+											</div>
+											<table class="table table-borderless mt-3">
+												<tbody>
+													<tr>
+														<td>
+															by <a href="{{ .UserURL }}" target="_blank" rel="noopener noreferrer">
+																<img src="{{ .AvatarURL }}" alt="Avatar" class="avatar">
+																{{ .User }}
+															</a>
+														</td>
+														<td class="text-r">
+															on <small> {{ .CreatedAt }}</small>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									{{ end }}
+									{{ end }}
+								</div>
+							</div>
+							<div class="card-footer text-r m-3">
+								<a href="https://github.com/{{ .User }}/{{ .RepoName }}/issues" target="_blank"
+									rel="noopener noreferrer">See Github</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- First Issue -->
+				<div class="col col-xl-6 mt-xl-5 mt-lg-3 mt-md-3 mt-sm-2 mt-3">
+					<div class="col col-xl-12 mt-3">
+						<div class="card nb-card">
+							<div class="card-header">
+								<p class="lead">First Issues
+									<button style="background-color:transparent;border:none;outline:none;" data-bs-toggle="tooltip"
+										data-bs-placement="right"
+										title="The issues with label for beginners('good first issue', 'beginner', 'first-timers-only','easy','difficult:easy')">
+										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+											class="bi bi-question-circle" viewBox="0 0 16 16">
+											<path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+											<path
+												d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+										</svg>
+									</button>
+								</p>
+							</div>
+							<div class="card-body">
+								<div>
+									{{ if eq .FirstIssueCount 0}}
+									<p style="text-align:center;">nothing to show</p>
+									{{ else }}
+									{{ range .FirstIssues }}
+									<div class="card mt-2 pb-0">
+										<div class="card-body">
+											<div>
+												{{ range $key,$v := .Label }}
+												<span class="badge rounded-pill mb-1" style="background-color:{{$v}}">{{$key}}</span>
+												{{ end }}
+												<h5 style="font-weight:bold;">
+													<a href="{{ .URL }}" target="_blank" rel="noopenew noreferrer">
+														{{.Title }}
+													</a>
+												</h5>
+												<p> {{ .Body }}</p>
+											</div>
+											<table class="table table-borderless mt-3">
+												<tbody>
+													<tr>
+														<td>
+															by <a href="{{ .UserURL }}" target="_blank" rel="noopener noreferrer">
+																<img src="{{ .AvatarURL }}" alt="Avatar" class="avatar">
+																{{ .User }}
+															</a>
+														</td>
+														<td class="text-r">
+															on <small> {{ .CreatedAt }}</small>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+									{{ end }}
+									{{ end }}
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col col-xl-6 mt-3">
+					<div class="col col-xl-12">
+						<div class="card nb-card">
+							<div class="card-header">
+								<p class="lead">Number of Issues</p>
+							</div>
+							{{ if eq .IssueCount 0 }}
+							<p style="text-align:center;">nothing to show</p>
+							{{ else }}
+							<div class="card-body">
+								{{ template "issue.html"}}
+								{{ end }}
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col col-xl-12 mt-3" style="min-height:10rem;">
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer">
+			<div class="text-center">
+				<small class="text-muted">powered by <strong>wf001/github-insight</strong>, generated on {{.GeneratedAt}}
+				</small>
+			</div>
+		</footer>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"></script>
+
+		<script src="https://go-echarts.github.io/go-echarts-assets/assets/echarts.min.js"></script>
+		<script src="https://go-echarts.github.io/go-echarts-assets/assets/themes/shine.js"></script>
+
+		{{ template "daily_commit_js.html"}}
+		{{ template "repo_language_js.html"}}
+		{{ template "committers_js.html"}}
+		{{ template "issue_js.html"}}
+</body>
+
+</html>
