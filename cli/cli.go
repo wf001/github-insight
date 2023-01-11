@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"os"
+	"strings"
 
 	"github.com/urfave/cli/v2"
 	"github.com/wf001/github-stat/parse"
@@ -14,19 +15,21 @@ func main() {
 	/*EntryPoint of the CLI*/
 
 	app := &cli.App{
-		Name:  "ghi",
-		Usage: "Github insight generator",
+		Name:    "ghi",
+		Usage:   "Github insight page generator",
+		Version: "0.1.1",
 		Commands: []*cli.Command{
 			{
 				Name:      "gen",
-				Usage:     "generate insight file",
-				UsageText: "gen [USERNAME] [REPOSITORY]",
+				Usage:     "generate insight page",
+				UsageText: "gen USERNAME/REPOSITORY",
 				Action: func(cCtx *cli.Context) error {
-					if len(os.Args) < 4 {
-						util.Error("Please input [user name] and [repository name]")
+					if len(os.Args) != 3 {
+						util.Error("Please input [user name]/[repository name] format.")
 					}
-					user := os.Args[2]
-					repo := os.Args[3]
+					userRepo := os.Args[2]
+					user := strings.Split(userRepo, "/")[0]
+					repo := strings.Split(userRepo, "/")[1]
 					_main(user, repo)
 					return nil
 				},
