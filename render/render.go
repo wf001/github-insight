@@ -9,8 +9,8 @@ import (
 
 	"github.com/go-echarts/go-echarts/v2/charts"
 	chartrender "github.com/go-echarts/go-echarts/v2/render"
-	"github.com/wf001/github-stat/parse"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/parse"
+	"github.com/wf001/github-insight/util"
 )
 
 const (

@@ -7,8 +7,8 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/wf001/github-stat/types"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/types"
+	"github.com/wf001/github-insight/util"
 )
 
 type Committer struct {

@@ -9,7 +9,7 @@ import (
 	"testing"
 
 	"github.com/google/go-github/v48/github"
-	"github.com/wf001/github-stat/parse"
+	"github.com/wf001/github-insight/parse"
 )
 
 type MockAPI struct{}

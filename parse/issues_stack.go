@@ -3,7 +3,7 @@ package parse
 
 import (
 	"github.com/google/go-github/v48/github"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/util"
 )
 
 type IssueStack map[string]int

@@ -7,7 +7,7 @@ import (
 	"strings"
 
 	"github.com/google/go-github/v48/github"
-	"github.com/wf001/github-stat/types"
+	"github.com/wf001/github-insight/types"
 )
 
 type Commit struct {

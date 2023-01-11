@@ -6,9 +6,9 @@ import (
 	"strings"
 
 	"github.com/urfave/cli/v2"
-	"github.com/wf001/github-stat/parse"
-	"github.com/wf001/github-stat/render"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/parse"
+	"github.com/wf001/github-insight/render"
+	"github.com/wf001/github-insight/util"
 )
 
 func main() {
