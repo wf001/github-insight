@@ -30,12 +30,33 @@ make build
 ```
 
 ``` sh
-./bin/ghi gen <username> <repository>
+./bin/ghi gen <username>/<repository>
 ```
 
 Bob's your uncle! Finally open `github-insight/generated/output.html` with your browser.
 
 Example is [here](https://wf001.github.io/github-insight/)
+
+```
+$ ./bin/ghi -h
+NAME:
+   ghi - Github insight page generator
+
+USAGE:
+   ghi [global options] command [command options] [arguments...]
+
+VERSION:
+   0.1.1
+
+COMMANDS:
+   gen      generate insight page
+   help, h  Shows a list of commands or help for one command
+
+GLOBAL OPTIONS:
+   --help, -h     show help (default: false)
+   --version, -v  print the version (default: false)
+
+```
 
 Note: GitHub's personal access token has an API call limit within a unit period.
 The maximum fetching amount per calling is 100. Thus, for example, running this CLI against a repository with 500 commits and 1000 issues will consume 15, and 4985 API call is available in the remaining hour.
