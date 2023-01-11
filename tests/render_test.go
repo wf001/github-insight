@@ -5,8 +5,8 @@ import (
 	"testing"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/wf001/github-stat/parse"
-	"github.com/wf001/github-stat/render"
+	"github.com/wf001/github-insight/parse"
+	"github.com/wf001/github-insight/render"
 )
 
 func TestRender(t *testing.T) {

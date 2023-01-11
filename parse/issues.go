@@ -6,8 +6,8 @@ import (
 	"fmt"
 
 	"github.com/google/go-github/v48/github"
-	"github.com/wf001/github-stat/types"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/types"
+	"github.com/wf001/github-insight/util"
 )
 
 //TODO: make namespace match the Commit one

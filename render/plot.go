@@ -5,8 +5,8 @@ import (
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
 	"github.com/go-echarts/go-echarts/v2/types"
-	"github.com/wf001/github-stat/parse"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/parse"
+	"github.com/wf001/github-insight/util"
 )
 
 type Charts struct {

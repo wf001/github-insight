@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/util"
 )
 
 func TestMin(t *testing.T) {

@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/wf001/github-stat/parse"
+	"github.com/wf001/github-insight/parse"
 )
 
 func TestGetRepository(t *testing.T) {

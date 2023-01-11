@@ -11,8 +11,8 @@ import (
 
 	"github.com/google/go-github/v48/github"
 	"github.com/pterm/pterm"
-	"github.com/wf001/github-stat/types"
-	"github.com/wf001/github-stat/util"
+	"github.com/wf001/github-insight/types"
+	"github.com/wf001/github-insight/util"
 	"golang.org/x/oauth2"
 )
 

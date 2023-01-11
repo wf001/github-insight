@@ -1,4 +1,4 @@
-module github.com/wf001/github-stat
+module github.com/wf001/github-insight
 
 go 1.17
 
